@@ -31,12 +31,18 @@ async function fetchWeatherByCity(cityName) {
                 humidity: json.main.humidity,
             });
         } else {
+            
+            document.querySelector("#weather").classList.remove('show');
+            
             showAlert(`
                 <p>Cidade não encontrada!</p>
                 <img src="images/undraw_current-location_c8qn.svg" alt="Cidade não encontrada" />
             `);
         }
     } catch (error) {
+        
+        document.querySelector("#weather").classList.remove('show');
+        
         showAlert(`
             <p>Erro ao buscar dados!</p>
             <img src="images/undraw_current-location_c8qn.svg" alt="Erro" />
@@ -67,10 +73,7 @@ async function fetchWeatherByCoords(lat, lon) {
         }
     } catch (error) {
         console.error('Erro ao buscar dados por coordenadas:', error);
-        showAlert(`
-            <p>Não foi possível localizar...</p>
-            <img src="images/undraw_current-location_c8qn.svg" alt="Erro de localização" />
-        `);
+        // ✅ NÃO mostra alerta, deixa limpo
     }
 }
 
@@ -81,18 +84,13 @@ function getInitialLocation() {
                 fetchWeatherByCoords(position.coords.latitude, position.coords.longitude);
             },
             (error) => {
-                console.warn('Geolocalização negada ou falhou.');
-                showAlert(`
-                    <p>Não foi possível localizar...</p>
-                    <img src="images/undraw_current-location_c8qn.svg" alt="Erro de localização" />
-                `);
+                // ✅ NÃO mostra alerta, apenas loga no console
+                console.warn('Geolocalização negada. Aguardando busca manual.');
             }
         );
     } else {
-        showAlert(`
-            <p>Não foi possível localizar...</p>
-            <img src="images/undraw_current-location_c8qn.svg" alt="Geolocalização não suportada" />
-        `);
+        // ✅ NÃO mostra alerta
+        console.warn('Geolocalização não suportada. Aguardando busca manual.');
     }
 }
 
