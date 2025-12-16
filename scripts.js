@@ -73,7 +73,6 @@ async function fetchWeatherByCoords(lat, lon) {
         }
     } catch (error) {
         console.error('Erro ao buscar dados por coordenadas:', error);
-        // ✅ NÃO mostra alerta, deixa limpo
     }
 }
 
@@ -84,17 +83,94 @@ function getInitialLocation() {
                 fetchWeatherByCoords(position.coords.latitude, position.coords.longitude);
             },
             (error) => {
-                // ✅ NÃO mostra alerta, apenas loga no console
                 console.warn('Geolocalização negada. Aguardando busca manual.');
             }
         );
     } else {
-        // ✅ NÃO mostra alerta
         console.warn('Geolocalização não suportada. Aguardando busca manual.');
     }
 }
 
 getInitialLocation();
+
+function getSuggestion(temp, description, humidity) {
+    const descLower = description.toLowerCase();
+    
+    if (descLower.includes('chuva') || descLower.includes('rain') || descLower.includes('chuvisco')) {
+        return {
+            icon: 'fa-umbrella',
+            text: '☔ Não esqueça o guarda-chuva! Chuva prevista para hoje.'
+        };
+    }
+    
+    if (descLower.includes('trovoada') || descLower.includes('tempestade') || descLower.includes('thunderstorm')) {
+        return {
+            icon: 'fa-cloud-bolt',
+            text: '⚡ Atenção! Possibilidade de tempestades. Evite áreas abertas.'
+        };
+    }
+    
+    if (descLower.includes('neve') || descLower.includes('snow')) {
+        return {
+            icon: 'fa-snowflake',
+            text: '❄️ Vista roupas quentes e adequadas para neve!'
+        };
+    }
+    
+    if (descLower.includes('névoa') || descLower.includes('neblina') || descLower.includes('fog') || descLower.includes('mist')) {
+        return {
+            icon: 'fa-smog',
+            text: '🌫️ Visibilidade reduzida. Dirija com cuidado!'
+        };
+    }
+    
+    if (temp >= 30) {
+        return {
+            icon: 'fa-sun',
+            text: '🌞 Muito calor! Use roupas leves, protetor solar e mantenha-se hidratado.'
+        };
+    }
+    
+    if (temp >= 25 && temp < 30) {
+        return {
+            icon: 'fa-temperature-high',
+            text: '😎 Clima quente! Roupas leves e não esqueça o protetor solar.'
+        };
+    }
+    
+    if (temp >= 20 && temp < 25) {
+        return {
+            icon: 'fa-cloud-sun',
+            text: '👕 Temperatura agradável! Roupas confortáveis são ideais.'
+        };
+    }
+    
+    if (temp >= 15 && temp < 20) {
+        return {
+            icon: 'fa-wind',
+            text: '🧥 Clima fresco! Uma blusa ou jaqueta leve pode ser útil.'
+        };
+    }
+    
+    if (temp >= 10 && temp < 15) {
+        return {
+            icon: 'fa-temperature-arrow-down',
+            text: '🧥 Está frio! Leve um casaco ou agasalho.'
+        };
+    }
+    
+    if (temp < 10) {
+        return {
+            icon: 'fa-temperature-low',
+            text: '🥶 Muito frio! Vista roupas quentes, gorro e luvas.'
+        };
+    }
+    
+    return {
+        icon: 'fa-lightbulb',
+        text: '💡 Aproveite o dia!'
+    };
+}
 
 function showInfo(json) {
     showAlert('');
@@ -108,6 +184,10 @@ function showInfo(json) {
     document.querySelector("#temp_min").innerHTML = `${json.tempMin.toFixed(1)} <sup>C°</sup>`;
     document.querySelector("#humidity").innerHTML = `${json.humidity}%`;
     document.querySelector("#wind").innerHTML = `${json.windSpeed} km/h`;
+    
+    const suggestion = getSuggestion(json.temp, json.description, json.humidity);
+    document.querySelector('#suggestion_icon').className = `fa-solid ${suggestion.icon}`;
+    document.querySelector('#suggestion_text').textContent = suggestion.text;
 }
 
 function showAlert(msg) {

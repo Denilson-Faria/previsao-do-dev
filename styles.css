@@ -42,6 +42,7 @@ body::after {
     animation: wave2 20s ease-in-out infinite reverse;
      z-index: 1;
 } 
+
 @keyframes wave1 {
     0%, 100% {
         transform: translateX(0) translateY(0);
@@ -87,8 +88,8 @@ body::after {
     display: flex;
     flex-direction: column; 
     align-items: center; 
-    gap: 15px; 
-    margin-bottom: 20px;
+    gap: 5px; 
+    margin-bottom: 5px;
     width: 100%; 
 }
 
@@ -143,7 +144,7 @@ body::after {
 
 #weather{
     display: none;
-    margin-top: 20px;
+    margin-top: 5px;
     animation: slideUp 0.5s ease-out;
 }
 
@@ -165,6 +166,7 @@ body::after {
 #weather #title{
     text-align: center;
     margin-bottom: 15px;
+    margin-top: 0;
     font-weight: 900;
     color: #372f3f;
     font-size: 24px;
@@ -217,21 +219,22 @@ body::after {
 }
 
 #other_infos{
-    margin-top: 25px;
+    margin-top: 15px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
+    gap: 10px;
+    margin-bottom: 0;
 }
 
 #other_infos .info{
     display: flex;
     align-items: center;
     justify-content: start;
-    padding: 12px 15px;
-    border-radius: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
     background-color: #fff;
-    gap: 12px;
+    gap: 10px;
     transition: all 0.3s ease;
 }
 
@@ -241,21 +244,21 @@ body::after {
 }
 
 #other_infos .info h2{
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 600;
     color: #555;
 }
 
 #other_infos .info p {
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 700;
     color: #333;
 }
 
 #other_infos .info i{
     text-align: center;
-    font-size: 24px;
-    width: 30px;
+    font-size: 20px;
+    width: 25px;
 }
 
 #temp_max_icon{
@@ -272,6 +275,33 @@ body::after {
 
 #wind_icon{
     color: #7c3aed;
+}
+
+#suggestion {
+    margin-top: 12px;
+    padding: 0;
+    background: none;
+    border-radius: 0;
+    color: #555;
+    text-align: center;
+    box-shadow: none;
+    animation: fadeIn 0.5s ease-in;
+    width: 100%;
+    grid-column: 1 / -1;
+}
+
+#suggestion i {
+    font-size: 16px;
+    margin-right: 6px;
+    display: inline;
+}
+
+#suggestion p {
+    font-size: 13px;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.5;
+    display: inline;
 }
 
 #alert {
@@ -308,9 +338,6 @@ body::after {
     }
 }
 
-
-
-/* Tablets */
 @media (max-width: 768px) {
     #container {
         padding: 20px;
@@ -345,7 +372,6 @@ body::after {
     }
 }
 
-/* Smartphones */
 @media (max-width: 480px) {
     body {
         padding: 15px;
@@ -415,7 +441,6 @@ body::after {
     }
 }
 
-/* Telas muito pequenas */
 @media (max-width: 360px) {
     #container {
         padding: 15px;
@@ -429,7 +454,6 @@ body::after {
         font-size: 18px;
     }
 }
-
 
 #page-header {
     text-align: center;
@@ -457,7 +481,6 @@ body::after {
         transform: translateY(0);
     }
 }
-
 
 #page-footer {
     position: fixed;
@@ -501,7 +524,6 @@ body::after {
 #page-footer strong {
     color: #fbbf24;
 }
-
 
 @media (max-width: 480px) {
     #page-header h1 {
